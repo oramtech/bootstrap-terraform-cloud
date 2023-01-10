@@ -42,4 +42,8 @@ resource "tfe_organization" "oramtech" {
   name = "oram-tech"
   email = "b@oram.co"
   collaborator_auth_policy = "two_factor_mandatory"
+  
+  lifecycle {   
+    prevent_destroy = true 
+  }
 }

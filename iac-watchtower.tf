@@ -4,12 +4,16 @@ resource "github_repository" "iac_watchtower" {
     owner = "oram-tech"
     repository = "iac_repo_template"
   }
+
+  lifecycle {   
+    prevent_destroy = true 
+  }
 }
 
 resource "github_repository_file" "main_tf" {
   repository = github_repository.iac_watchtower.name
   file = "main.tf"
-  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oramtech", tfe_workspace="iac-watchtower"})
+  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oram-tech", tfe_workspace="iac-watchtower"})
 }
 
 resource "github_repository_file" "devcontinaer_json" {
@@ -22,6 +26,10 @@ resource "tfe_workspace" "iac_watchtower" {
   name = "iac-watchtower"
   organization = tfe_organization.oramtech.name
   execution_mode = "remote"
+
+  lifecycle {   
+    prevent_destroy = true 
+  }
 }
 
 resource "tfe_workspace_variable_set" "iac_watchtower_dockertcp" {
