@@ -1,11 +1,21 @@
 resource "github_repository" "iac_watchtower" {
   name = "iac-watchtower"
-  visibility = "public"
-  has_issues = true
-  has_projects = false
-  has_wiki = false
-  delete_branch_on_merge = true
-  license_template = "gpl-3.0"
+  template {
+    owner = "oram-tech"
+    repository = "iac_repo_template"
+  }
+}
+
+resource "github_repository_file" "main_tf" {
+  repository = github_repository.iac_watchtower.name
+  file = "main.tf"
+  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oramtech", tfe_workspace="iac-watchtower"})
+}
+
+resource "github_repository_file" "devcontinaer_json" {
+  repository = github_repository.iac_watchtower.name
+  file = ".devcontainer/devcontainer.json"
+  content = templatefile("./templates/iac_repo/.devcontainer/devcontainer.json.tftpl", {})
 }
 
 resource "tfe_workspace" "iac_watchtower" {

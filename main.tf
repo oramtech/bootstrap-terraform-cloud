@@ -5,6 +5,9 @@ terraform {
     }  
     github = {
       source  = "integrations/github" 
+      version = "5.9.0"
+      //Pinning to an old version as through 5.13 at least there is an issue
+      // https://github.com/integrations/terraform-provider-github/issues/1466
     }
   }
 
