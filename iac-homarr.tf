@@ -13,7 +13,11 @@ resource "github_repository" "iac_homarr" {
 resource "github_repository_file" "main_tf_homarr" {
   repository = github_repository.iac_homarr.name
   file = "main.tf"
-  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oramtech", tfe_workspace="iac-homarr"})
+  content = templatefile("./templates/iac_repo/main.tf.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-homarr", 
+    include_cloudflare = true
+  })
   commit_author = "Ben Oram"
   commit_email = "b@oram.co"
 }

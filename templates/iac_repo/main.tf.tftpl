@@ -4,6 +4,13 @@ terraform {
       source  = "kreuzwerker/docker"
       version = "2.24.0"
     }
+
+%{if include_cloudflare == true}
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 3.0"
+    }
+%{ endif }
   }
 
   cloud {
@@ -14,6 +21,12 @@ terraform {
     }
   }
 }
+
+%{if include_cloudflare == true}
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+%{ endif }
 
 provider "docker" {
   host     = var.dockertcp_host

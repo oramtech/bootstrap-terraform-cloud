@@ -13,7 +13,11 @@ resource "github_repository" "iac_watchtower" {
 resource "github_repository_file" "main_tf" {
   repository = github_repository.iac_watchtower.name
   file = "main.tf"
-  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oramtech", tfe_workspace="iac-watchtower"})
+  content = templatefile("./templates/iac_repo/main.tf.tftpl", {
+    tfe_org = "oramtech", 
+    tfe_workspace = "iac-watchtower", 
+    include_cloudflare = false
+  })
   commit_author = "Ben Oram"
   commit_email = "b@oram.co"
 }
