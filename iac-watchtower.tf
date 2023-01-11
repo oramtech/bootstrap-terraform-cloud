@@ -1,7 +1,7 @@
 resource "github_repository" "iac_watchtower" {
   name = "iac-watchtower"
   template {
-    owner = "oram-tech"
+    owner = "oramtech"
     repository = "iac_repo_template"
   }
 
@@ -13,13 +13,17 @@ resource "github_repository" "iac_watchtower" {
 resource "github_repository_file" "main_tf" {
   repository = github_repository.iac_watchtower.name
   file = "main.tf"
-  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oram-tech", tfe_workspace="iac-watchtower"})
+  content = templatefile("./templates/iac_repo/main.tf.tftpl", {tfe_org = "oramtech", tfe_workspace="iac-watchtower"})
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
 }
 
 resource "github_repository_file" "devcontinaer_json" {
   repository = github_repository.iac_watchtower.name
   file = ".devcontainer/devcontainer.json"
   content = templatefile("./templates/iac_repo/.devcontainer/devcontainer.json.tftpl", {})
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
 }
 
 resource "tfe_workspace" "iac_watchtower" {

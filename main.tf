@@ -39,7 +39,7 @@ provider "github" {
 
 # Create an organization
 resource "tfe_organization" "oramtech" {
-  name = "oram-tech"
+  name = "oramtech"
   email = "b@oram.co"
   collaborator_auth_policy = "two_factor_mandatory"
   
