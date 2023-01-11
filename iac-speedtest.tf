@@ -30,6 +30,30 @@ resource "github_repository_file" "devcontainer_json_speedtest" {
   commit_email = "b@oram.co"
 }
 
+resource "github_repository_file" "generated_variables_tf_speedtest" {
+  repository = github_repository.iac_speedtest.name
+  file = "generated-variables.tf"
+  content = templatefile("./templates/iac_repo/generated-variables.tf.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-speedtest", 
+    include_cloudflare = true    
+  })
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
+resource "github_repository_file" "readme_md_speedtest" {
+  repository = github_repository.iac_speedtest.name
+  file = "README.md"
+  content = templatefile("./templates/iac_repo/README.md.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-speedtest", 
+    include_cloudflare = true
+  })
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
 resource "tfe_workspace" "iac_speedtest" {
   name = "iac-speedtest"
   organization = tfe_organization.oramtech.name

@@ -30,6 +30,30 @@ resource "github_repository_file" "devcontainer_json_portainer" {
   commit_email = "b@oram.co"
 }
 
+resource "github_repository_file" "generated_variables_tf_portainer" {
+  repository = github_repository.iac_portainer.name
+  file = "generated-variables.tf"
+  content = templatefile("./templates/iac_repo/generated-variables.tf.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-portainer", 
+    include_cloudflare = true    
+  })
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
+resource "github_repository_file" "readme_md_portainer" {
+  repository = github_repository.iac_portainer.name
+  file = "README.md"
+  content = templatefile("./templates/iac_repo/README.md.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-portainer", 
+    include_cloudflare = true
+  })
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
 resource "tfe_workspace" "iac_portainer" {
   name = "iac-portainer"
   organization = tfe_organization.oramtech.name

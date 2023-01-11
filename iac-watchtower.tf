@@ -10,11 +10,11 @@ resource "github_repository" "iac_watchtower" {
   }
 }
 
-resource "github_repository_file" "main_tf" {
+resource "github_repository_file" "main_tf_watchtower" {
   repository = github_repository.iac_watchtower.name
   file = "main.tf"
   content = templatefile("./templates/iac_repo/main.tf.tftpl", {
-    tfe_org = "oramtech", 
+    tfe_org = "oramtech",
     tfe_workspace = "iac-watchtower", 
     include_cloudflare = false
   })
@@ -22,10 +22,34 @@ resource "github_repository_file" "main_tf" {
   commit_email = "b@oram.co"
 }
 
-resource "github_repository_file" "devcontinaer_json" {
+resource "github_repository_file" "devcontainer_json_watchtower" {
   repository = github_repository.iac_watchtower.name
   file = ".devcontainer/devcontainer.json"
   content = templatefile("./templates/iac_repo/.devcontainer/devcontainer.json.tftpl", {})
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
+resource "github_repository_file" "generated_variables_tf_watchtower" {
+  repository = github_repository.iac_watchtower.name
+  file = "generated-variables.tf"
+  content = templatefile("./templates/iac_repo/generated-variables.tf.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-watchtower", 
+    include_cloudflare = false    
+  })
+  commit_author = "Ben Oram"
+  commit_email = "b@oram.co"
+}
+
+resource "github_repository_file" "readme_md_watchtower" {
+  repository = github_repository.iac_watchtower.name
+  file = "README.md"
+  content = templatefile("./templates/iac_repo/README.md.tftpl", {
+    tfe_org = "oramtech",
+    tfe_workspace = "iac-watchtower", 
+    include_cloudflare = false
+  })
   commit_author = "Ben Oram"
   commit_email = "b@oram.co"
 }
